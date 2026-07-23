@@ -1,10 +1,16 @@
 import { Router } from 'express';
-import { ProdutoController } from '../controllers/ProdutoController';
+import { ProdutoController } from '../presentation/controllers/produto_controller';
+import { ProdutoRepository } from '../infra/database/ProdutoRepository';
+import { ListarProdutosUseCase } from '../application/usecases/ListarProdutos';
 
 const router = Router();
-const produtoController = new ProdutoController();
 
-// Quando acessarem GET /produtos, o método listarTodos da classe entra em ação
-router.get('/produtos', produtoController.listarTodos);
+const repository = new ProdutoRepository();
+
+const useCase = new ListarProdutosUseCase(repository);
+
+const controller = new ProdutoController(useCase);
+
+router.get('/', controller.listarTodos);
 
 export default router;

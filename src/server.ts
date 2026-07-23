@@ -6,8 +6,10 @@ const port = 3000;
 
 app.use(express.json());
 
-// Dizendo para o Express usar o nosso arquivo de rotas
-app.use(produtoRoutes);
+// AQUI ESTÁ A CORREÇÃO:
+// Agora, tudo que estiver dentro de produtoRoutes só será ativado 
+// se a URL começar com /produtos
+app.use('/produtos', produtoRoutes);
 
 // Rota raiz (teste)
 app.get('/', (req: Request, res: Response) => {
